@@ -62,6 +62,17 @@ def digits(n):
     return 1 + floor(log10(n)) if n != 0 else 1
 
 
+def truncate_left(n):
+    """
+    Returns a single left truncation of n.
+
+    Example:
+        >>> truncate_left(9137)
+        137
+    """
+    return n % pow(10, digits(n) - 1)
+
+
 def left_truncates(n):
     """
     Generates all left truncates of an integer n.
@@ -70,8 +81,9 @@ def left_truncates(n):
         >>> list(left_truncates(9137))
         [9137, 137, 37, 7]
     """
-    for p in reversed(range(digits(n))):
-        yield n % pow(10, p + 1)
+    for _ in range(digits(n)):
+        yield n
+        n = truncate_left(n)
 
 
 def is_left_truncatable(n):
